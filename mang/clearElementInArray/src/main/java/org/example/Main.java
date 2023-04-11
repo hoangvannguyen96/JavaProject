@@ -1,5 +1,6 @@
 package org.example;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
@@ -14,22 +15,23 @@ public class Main {
         }
         System.out.println("nhập phần tử cần xóa khỏi mảng?");
         int element = sc.nextInt();
-        boolean check = false;
+        int index = -1;
         for (int i = 0; i < array.length; i++) {
             if (array[i] == element) {
-                for (int index = i; index < array.length - 1; index++) {
-                    array[index] = array[index + 1];
-                }
-                check = true;
+                index = i;
                 break;
             }
         }
-        if (check) {
-            for (int i = 0; i < array.length - 1; i++) {
+        if (index == -1) {
+            System.out.println("số không có trong mảng");
+        } else {
+            for (; index < array.length - 1; index++) {
+                array[index] = array[index + 1];
+            }
+            array = Arrays.copyOf(array, array.length - 1);
+            for (int i = 0; i < array.length; i++) {
                 System.out.print(array[i] + " ");
             }
-        } else {
-            System.out.println("số không có trong mảng");
         }
     }
 }

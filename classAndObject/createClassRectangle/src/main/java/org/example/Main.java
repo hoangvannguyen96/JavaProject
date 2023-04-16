@@ -4,14 +4,10 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Nhập width?");
-        double width = sc.nextDouble();
-        System.out.println("Nhập height?");
-        double height = sc.nextDouble();
-        Rectangle rec = new Rectangle(width, height);
-        System.out.println("Area của rec là: " + rec.getArea());
-        System.out.println("Primeter của rec là: " + rec.getPrimeter());
+        Rectangle rectangle = new Rectangle();
+        Rectangle rectangle1 = new Rectangle(3, 5);
+        Rectangle rectangle2 = new Rectangle(5);
+        System.out.println(rectangle1.width);
     }
 }
 

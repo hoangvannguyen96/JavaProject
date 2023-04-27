@@ -18,7 +18,7 @@ public class MyList<E> {
 
     public void ensureCapacity(int minCapacity) {
         int temp = element.length;
-        if ( temp< minCapacity) {
+        if (temp < minCapacity) {
             int array = temp * 2;
             if (array < minCapacity) {
                 array = minCapacity;
@@ -46,52 +46,82 @@ public class MyList<E> {
             System.arraycopy(element, index + 1, element, index, size - (index + 1));
         }
         size--;
-        element[size]=null;
+        element[size] = null;
         return (E) element[index];
     }
-    public int size(){
+
+    public int size() {
         return size;
     }
-    public MyList <E> clone(){
-        MyList <E> clone=new MyList<E>(size);
-        System.arraycopy(element,0,clone,0,size);
+
+    public MyList<E> clone() {
+        MyList<E> clone = new MyList<E>(size);
+        System.arraycopy(element, 0, clone, 0, size);
         return clone;
     }
-    public int indexOf(E o){
-        if(o==null){
-            for(int i=0;i<size;i++){
-                if(element[i]==null){
+
+    public int indexOf(E o) {
+        if (o == null) {
+            for (int i = 0; i < size; i++) {
+                if (element[i] == null) {
                     return i;
                 }
             }
-        }else {
-            for(int i=0;i<size;i++){
-                if(element[i]==o){
+        } else {
+            for (int i = 0; i < size; i++) {
+                if (element[i] == o) {
                     return i;
                 }
             }
         }
         return -1;
     }
-    public boolean contains(E o){
-        return indexOf(o)>=0;
+
+    public boolean contains(E o) {
+        return indexOf(o) >= 0;
     }
-    public boolean add(E e){
-        ensureCapacity(size+1);
-        element[size++]=e;
+
+    public boolean add(E e) {
+        ensureCapacity(size + 1);
+        element[size++] = e;
         return true;
     }
-    public E get(int i){
+
+    public E get(int i) {
         if (i < 0 || i >= size) {
             throw new IndexOutOfBoundsException("Index: " + i + ", Size: " + size);
         }
         return (E) element[i];
     }
-    public void clear(){
-        for(int i=0;i<size;i++){
-            element[i]=null;
+
+    public void clear() {
+        for (int i = 0; i < size; i++) {
+            element[i] = null;
         }
-        size=0;
+        size = 0;
     }
 
+    public void addAll(MyList<E> myList) {
+        if (myList == null) {
+            System.out.println("không thể thêm");
+        } else {
+            ensureCapacity(size() + myList.size());
+            for (int i = 0; i < myList.size(); i++) {
+                element[size + i] = myList.get(i);
+            }
+            size = size() + myList.size();
+        }
+    }
+
+    public boolean contain(MyList<E> myList) {
+        if (myList == null) {
+            return false;
+        }
+        for (int i = 0; i < myList.size(); i++) {
+            if (contains(myList.get(i))) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

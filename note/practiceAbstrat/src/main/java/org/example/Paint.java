@@ -8,38 +8,89 @@ public class Paint {
     public static Shape[] shapes = new Shape[5];
 
     public static void main(String[] args) {
+        Scanner scanner=new Scanner(System.in);
         shapes[0] = new Circle(5, "RED", true);
         shapes[1] = new Rectangle(4, 5, "RED", true);
         shapes[2] = new Rectangle(5, 5, "RED", false);
         shapes[3] = new Circle(6, "BLACK", false);
         shapes[4] = new Rectangle(7, 1, "RED", true);
 
-        fixShape(0, shapes);
-
-
-//         Thêm 1 hình học: cho lựa chọn hình khi thêm
-//         Sửa 1 hình học
-//         Xóa 1 hình học tại vị trí index
-//         Sắp xếp các hình học tăng dần theo diện tích, theo màu, theo bán kính, theo tên
-//         Tính tổng diện tích của tất cả các hình
-//         Tính tổng diện tích của tất cả các hình có màu đỏ và đã được tô màu
-//         Tìm các hình học theo màu, theo trạng thái đã được tô hay chưa
-//
+        while (true) {
+            System.out.println("Menu");
+            System.out.println("1. Thêm 1 hình học theo vị trí cho trước");
+            System.out.println("2. Xóa 1 hình học tại vị trí cho trước");
+            System.out.println("3. Sắp xếp hình học theo diện tích tăng dần");
+            System.out.println("4. Tính tổng diện tích các hình");
+            System.out.println("5. Tính tổng diện tích hình học theo màu và trạng thái");
+            System.out.println("6. Tìm hình học theo màu");
+            System.out.println("7. Tìm hình học theo trạng thái");
+            System.out.println("8. Sắp xếp hình học theo màu tăng dần");
+            System.out.println("9. Sắp xếp hình học theo bán kính tăng dần");
+            System.out.println("10. Sắp xếp hình học theo tên tăng dần");
+            System.out.println("11. Sửa 1 hình học theo vị trí cho trước");
+            System.out.println("12. Exit");
+            int choice= scanner.nextInt();
+            switch (choice){
+                case 1:
+                    System.out.println("Nhập vị trí cần thêm");
+                    scanner.nextLine();
+                    int index= scanner.nextInt();
+                    addShape(index,shapes);
+                    break;
+                case 2:
+                    System.out.println("Nhập vị trí cần thêm");
+                    scanner.nextLine();
+                    int index1= scanner.nextInt();
+                   deleteShape(index1,shapes);
+                   break;
+                case 3:
+                    area(shapes);
+                    break;
+                case 4:
+                    totalArea(shapes);
+                    break;
+                case 5:
+                    System.out.println("Nhập màu?");
+                    scanner.nextLine();
+                    String color= scanner.nextLine();
+                    System.out.println("Nhập trạng thái?");
+                    boolean status= scanner.nextBoolean();
+                    totalAreaColorAndStatus(shapes,color,status);
+                    break;
+                case 6:
+                    scanner.nextLine();
+                    System.out.println("Nhập màu?");
+                    String color1= scanner.nextLine();
+                    findColor(shapes,color1);
+                    break;
+                case 7:
+                    System.out.println("Nhập trạng thái?");
+                    boolean status1= scanner.nextBoolean();
+                    findFilled(shapes,status1);
+                    break;
+                case 8:
+                    ascendingColor(shapes);
+                    break;
+                case 9:
+                    ascendingRadius(shapes);
+                    break;
+                case 10:
+                    ascendingName(shapes);
+                    break;
+                case 11:
+                    System.out.println("Nhập vị trí cần thêm");
+                    scanner.nextLine();
+                    int index2= scanner.nextInt();
+                    fixShape(index2,shapes);
+                    break;
+                case 12:
+                    System.out.println("See you again!");
+                    System.exit(0);
+                default:
+                    break;
+            }
+        }
     }
-
-    // Câu 3:
-    public static void deleteShapesViews() {
-        shapes = deleteShape(2, shapes);
-    }
-
-
-    // Câu 0:
-    public static void resizeShapesView(Shape[] shapes) {
-        System.out.println(Arrays.toString(shapes));
-        resizeShapes(shapes);
-        System.out.println(Arrays.toString(shapes));
-    }
-
     public static void resizeShapes(Shape[] shapes) {
         for (int i = 0; i < shapes.length; i++) {
             shapes[i].resize(0.5);
@@ -52,21 +103,40 @@ public class Paint {
             if (i == index) {
                 continue;
             }
-            shapesNew[j] = shapes[i];
-            j++;
+            shapesNew[j++] = shapes[i];
         }
         return shapesNew;
     }
 
-    //câu 1
-    public static Shape[] addShape(int index, Shape[] shape) {
-        Shape[] shape1 = new Shape[shape.length + 1];
-        if (index >= 0) System.arraycopy(shape, 0, shape1, 0, index);
-        shape1[index] = new Rectangle(3, 4);
-        if (shape.length - index >= 0) System.arraycopy(shape, index, shape1, index + 1, shape.length - index);
-        return shape1;
+    public static void addShape(int index, Shape[] shape) {
+        Scanner sc = new Scanner(System.in);
+        boolean check = true;
+        while (check) {
+            System.out.println("bạn muốn thêm hình gì?");
+            System.out.println("1. Circle");
+            System.out.println("2. Exit");
+            int choice = sc.nextInt();
+            switch (choice) {
+                case 1:
+                    Shape[] shape1 = new Shape[shape.length + 1];
+                    if (index >= 0)
+                        System.arraycopy(shape, 0, shape1, 0, index);
+                    System.out.println("nhập bán kính?");
+                    sc.nextLine();
+                    double radius = sc.nextDouble();
+                    shape1[index] = new Circle(radius);
+                    if (shape.length - 1 - index >= 0)
+                        System.arraycopy(shape, index, shape1, index + 1, shape.length - 1 - index);
+                    break;
+                case 2:
+                    System.out.println("goodbye!");
+                    check = false;
+                    break;
+                default:
+                    break;
+            }
+        }
     }
-
 
     public static Shape[] area(Shape[] shape) {
         for (int i = 0; i < shape.length - 1; i++) {
@@ -89,7 +159,7 @@ public class Paint {
         return sum;
     }
 
-    public static double totalAreaColor(Shape[] shape, String color, boolean boo) {
+    public static double totalAreaColorAndStatus(Shape[] shape, String color, boolean boo) {
         double sum = 0;
         for (int i = 0; i < shape.length; i++) {
             if (shape[i].getColor() == color && shape[i].isFilled() == boo) {
@@ -185,13 +255,15 @@ public class Paint {
                                 double width = sc.nextDouble();
                                 System.out.println("mời nhập height?");
                                 double height = sc.nextDouble();
-                                System.out.println("hình ban đầu của bạn là "+shape[index]);
+                                System.out.println("hình ban đầu của bạn là " + shape[index]);
                                 shape[index] = new Rectangle(width, height);
-                                System.out.println("hình của bạn lúc này là "+shape[index]);
+                                System.out.println("hình của bạn lúc này là " + shape[index]);
                                 break;
                             case 2:
                                 System.out.println("Step");
-                                action=false;
+                                action = false;
+                                break;
+                            default:
                                 break;
                         }
                     }
@@ -199,6 +271,9 @@ public class Paint {
                 case 3:
                     System.out.println("Goodbye!");
                     System.exit(0);
+                    break;
+                default:
+                    break;
             }
         }
     }
